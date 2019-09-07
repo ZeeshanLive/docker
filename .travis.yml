@@ -5,3 +5,16 @@ before_install:
   - docker build -t zeeshanlive/docker-react -f Dockerfile.dev .
 script:
   - docker run -e CI=true zeeshanlive/docker-react npm test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-south-1"
+  app: "docker-io"
+  env: "DockerIo-env"
+  bucket_name: "elasticbeanstalk-ap-south-1-507300633534"
+  bucket_path: "docker-io"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"  
